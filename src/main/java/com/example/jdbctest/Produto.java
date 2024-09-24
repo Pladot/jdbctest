@@ -3,6 +3,9 @@ package com.example.jdbctest;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.sql.ResultSet;
 
 public class Produto {
     private int id;
@@ -77,5 +80,32 @@ public class Produto {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public static ArrayList<Produto> getAll(){
+        Conexao c = new Conexao();
+        Connection dbConn = c.getConexao();
+        ArrayList<Produto> produtos = new ArrayList<>();
+
+        String sql = "SELECT * FROM produto";
+
+        try {
+            Statement st = dbConn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+
+            while(rs.next()){
+                Produto produto = new Produto();
+
+                produto.setId(rs.getInt("id"));
+                produto.setValor(rs.getFloat("valor"));
+                produto.setNome(rs.getString("nome"));
+                produtos.add(produto);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return produtos;
+
     }
 }
