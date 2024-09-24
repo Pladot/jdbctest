@@ -45,4 +45,22 @@ public class Produto {
             e.printStackTrace();
         }
     }
+
+    public void update(){
+        Conexao c = new Conexao();
+        Connection dbConn = c.getConexao();
+
+        String sql = "UPDATE produto SET valor = ?, nome = ? WHERE id = ?";
+
+        try {
+            PreparedStatement ps = dbConn.prepareStatement(sql);
+
+            ps.setFloat(1, this.valor);
+            ps.setString(2, this.nome);
+            ps.setInt(3, this.id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
