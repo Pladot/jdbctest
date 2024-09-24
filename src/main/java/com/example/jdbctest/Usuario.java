@@ -3,6 +3,9 @@ package com.example.jdbctest;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class Usuario {
     private int id;
@@ -70,6 +73,31 @@ public class Usuario {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public static ArrayList<Usuario> getAll(){
+        Conexao c = new Conexao();
+        Connection dbConn = c.getConexao();
+        ArrayList<Usuario> usuarios = new ArrayList<>();
+
+        String sql = "SELECT * FROM usuario";
+
+        try {
+            Statement st = dbConn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+                Usuario usuario = new Usuario();
+
+                usuario.setId(rs.getInt("id"));
+                usuario.setNome(rs.getString("nome"));
+                usuarios.add(usuario);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return usuarios;
+
     }
     
 }
