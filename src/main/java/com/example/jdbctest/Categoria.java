@@ -38,4 +38,21 @@ public class Categoria {
             e.printStackTrace();
         }
     }
+
+    public void update(){
+        Conexao c = new Conexao();
+        Connection dbConn = c.getConexao();
+
+        String sql = "UPDATE categoria SET descricao = ? WHERE id = ?";
+
+        try {
+            PreparedStatement ps = dbConn.prepareStatement(sql);
+
+            ps.setString(1, this.descricao);
+            ps.setInt(2, this.id);
+            ps.executeUpdate();  
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
