@@ -25,17 +25,35 @@ public class Usuario {
         Conexao c = new Conexao();
         Connection dbConn = c.getConexao();
 
-        String sql = "INSERT into usuario " + "(id,nome)" + "VALUES (?,?)";
+        String sql = "INSERT into usuario " + "(id,nome) " + "VALUES (?,?)";
 
         try {
             PreparedStatement ps = dbConn.prepareStatement(sql);
 
             ps.setInt(1, this.id);
             ps.setString(2, this.nome);
+            ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         
+    }
+
+    public void update(){
+        Conexao c = new Conexao();
+        Connection dbConn = c.getConexao();
+
+        String sql = "UPDATE usuario " + "SET nome = ? WHERE id = ?";
+
+        try {
+            PreparedStatement ps = dbConn.prepareStatement(sql);
+
+            ps.setString(1, this.nome);
+            ps.setInt(2, this.id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
     
 }
