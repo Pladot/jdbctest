@@ -63,4 +63,19 @@ public class Produto {
             e.printStackTrace();
         }
     }
+
+    public void delete(){
+        Conexao c = new Conexao();
+        Connection dbConn = c.getConexao();
+
+        String sql = "DELETE FROM produto WHERE id = ?";
+
+        try {
+            PreparedStatement ps = dbConn.prepareStatement(sql);
+            ps.setInt(1, this.id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
