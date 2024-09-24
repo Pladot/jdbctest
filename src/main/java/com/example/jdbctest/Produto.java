@@ -1,5 +1,9 @@
 package com.example.jdbctest;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 public class Produto {
     private int id;
     private float valor;
@@ -24,5 +28,21 @@ public class Produto {
         this.nome = nome;
     }
 
-    
+    public void insert(){
+        Conexao c = new Conexao();
+        Connection dbConn = c.getConexao();
+
+        String sql = "INSERT INTO produto (id,valor,nome) VALUES (?,?,?)";
+
+        try {
+            PreparedStatement ps = dbConn.prepareStatement(sql);
+
+            ps.setInt(1, this.id);
+            ps.setFloat(2, this.valor);
+            ps.setString(3, this.nome);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
