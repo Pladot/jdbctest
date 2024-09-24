@@ -2,7 +2,10 @@ package com.example.jdbctest;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
+import java.sql.ResultSet;
 
 public class Categoria {
     private int id;
@@ -70,5 +73,31 @@ public class Categoria {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public static ArrayList<Categoria> getAll(){
+        Conexao c = new Conexao();
+        Connection dbConn = c.getConexao();
+        ArrayList<Categoria> categorias = new ArrayList<>();
+
+        String sql = "SELECT * FROM categoria";
+
+        try {
+            Statement st = dbConn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+
+            while(rs.next()){
+                Categoria categoria = new Categoria();
+
+                categoria.setId(rs.getInt("id"));
+                categoria.setDescricao(rs.getString("descricao"));
+                categorias.add(categoria);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return categorias;
+
     }
 }
