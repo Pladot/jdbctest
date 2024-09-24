@@ -96,7 +96,7 @@ public class Usuario {
             e.printStackTrace();
         }
 
-        return usuarios;
+        return usuarios;    
 
     }
     
