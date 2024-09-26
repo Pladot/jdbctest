@@ -1,6 +1,7 @@
 package com.example.jdbctest.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -9,7 +10,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.example.jdbctest.model.Categoria;
-import com.example.jdbctest.model.Produto;
 
 @RestController
 public class CategoriaController {
@@ -38,6 +38,15 @@ public class CategoriaController {
     public ArrayList<Categoria> getAllCategoria(Categoria categoria) throws SQLException{
         
         return Categoria.getAll();
+    }
+
+    @GetMapping("categoria/{id}")
+    public Categoria getOne(@PathVariable int id) throws SQLException{
+        Categoria categoria = new Categoria();
+        categoria.setId(id);
+        categoria.load();
+
+        return categoria;
     }
     
 }
