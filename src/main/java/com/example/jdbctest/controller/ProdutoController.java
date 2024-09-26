@@ -3,10 +3,11 @@ package com.example.jdbctest.controller;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.jdbctest.model.Produto;
-import com.example.jdbctest.model.Usuario;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 
@@ -32,6 +33,12 @@ public class ProdutoController {
         produto.delete();
 
         return produto;
+    }
+
+    @GetMapping("produto")
+    public ArrayList<Produto> getAllProduto(Produto produto) throws SQLException{
+        
+        return Produto.getAll();
     }
 }
 
