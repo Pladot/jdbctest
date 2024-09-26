@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 @RestController
 public class UsuarioController {
@@ -33,11 +35,19 @@ public class UsuarioController {
         return usuario;
     }
 
-    @GetMapping("usuarios")
+    @GetMapping("usuario")
     public ArrayList<Usuario> getAllUsuario(Usuario usuario) throws SQLException{
         
         return Usuario.getAll();
     }
     
+    @GetMapping("usuario/{id}")
+    public Usuario getOne(@PathVariable("id") int id) throws SQLException{
+        Usuario usuario = new Usuario();
+        usuario.setId(id);
+        usuario.load();
+
+        return usuario;
+    }
     
 }

@@ -96,5 +96,5 @@ public class Usuario {
             this.nome = rs.getString("nome");
         }
     
-    }
+    } 
 }
