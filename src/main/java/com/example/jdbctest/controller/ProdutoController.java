@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 
@@ -39,6 +40,15 @@ public class ProdutoController {
     public ArrayList<Produto> getAllProduto(Produto produto) throws SQLException{
         
         return Produto.getAll();
+    }
+
+    @GetMapping("produto/{id}")
+    public Produto getOne(@PathVariable("id") int id) throws SQLException{
+        Produto produto = new Produto();
+        produto.setId(id);
+        produto.load();
+
+        return produto;
     }
 }
 
