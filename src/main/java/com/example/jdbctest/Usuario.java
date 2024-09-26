@@ -97,7 +97,26 @@ public class Usuario {
         }
 
         return usuarios;    
+    }
 
+    public void load(){
+        Conexao c = new Conexao();
+        Connection dbConn = c.getConexao();
+
+        String sql = "SELECT * FROM usuario WHERE id = ?";
+
+        try {
+            PreparedStatement ps = dbConn.prepareStatement(sql);
+
+            ps.setInt(1, this.id);
+            ResultSet rs = ps.executeQuery();
+
+            if(rs.next()){
+                this.nome = rs.getString("nome");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
     
 }
