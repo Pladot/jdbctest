@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import com.example.jdbctest.model.Categoria;
 
 
+
 @RestController
 public class CategoriaController {
     @PostMapping("categoria/cadastrar")
@@ -16,4 +17,12 @@ public class CategoriaController {
         
         return categoria;
     }
+
+    @PostMapping("categoria/atualizar")
+    public Categoria update(Categoria categoria) throws SQLException{
+        categoria.update();
+        
+        return categoria;
+    }
+    
 }
