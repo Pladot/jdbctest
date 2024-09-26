@@ -5,13 +5,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.jdbctest.model.Usuario;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import org.springframework.web.bind.annotation.PostMapping;
-
+import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
 public class UsuarioController {
-    @PostMapping("/usuario/cadastrar")
+    @PostMapping("usuario/cadastrar")
     public Usuario cadastrar(Usuario usuario) throws SQLException {
         usuario.insert();
         
@@ -31,5 +32,12 @@ public class UsuarioController {
 
         return usuario;
     }
+
+    @GetMapping("usuarios")
+    public ArrayList<Usuario> getAllUsuario(Usuario usuario) throws SQLException{
+        
+        return Usuario.getAll();
+    }
+    
     
 }
