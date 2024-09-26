@@ -42,7 +42,7 @@ public class UsuarioController {
     }
     
     @GetMapping("usuario/{id}")
-    public Usuario getOne(@PathVariable("id") int id) throws SQLException{
+    public Usuario getOne(@PathVariable int id) throws SQLException{
         Usuario usuario = new Usuario();
         usuario.setId(id);
         usuario.load();

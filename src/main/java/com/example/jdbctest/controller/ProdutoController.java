@@ -43,7 +43,7 @@ public class ProdutoController {
     }
 
     @GetMapping("produto/{id}")
-    public Produto getOne(@PathVariable("id") int id) throws SQLException{
+    public Produto getOne(@PathVariable int id) throws SQLException{
         Produto produto = new Produto();
         produto.setId(id);
         produto.load();
