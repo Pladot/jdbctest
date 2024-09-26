@@ -31,65 +31,52 @@ public class Produto {
         this.nome = nome;
     }
 
-    public void insert(){
+    public void insert() throws SQLException{
         Conexao c = new Conexao();
         Connection dbConn = c.getConexao();
 
         String sql = "INSERT INTO produto (id,valor,nome) VALUES (?,?,?)";
 
-        try {
-            PreparedStatement ps = dbConn.prepareStatement(sql);
+        PreparedStatement ps = dbConn.prepareStatement(sql);
 
-            ps.setInt(1, this.id);
-            ps.setFloat(2, this.valor);
-            ps.setString(3, this.nome);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        ps.setInt(1, this.id);
+        ps.setFloat(2, this.valor);
+        ps.setString(3, this.nome);
+        ps.executeUpdate();
     }
 
-    public void update(){
+    public void update() throws SQLException{
         Conexao c = new Conexao();
         Connection dbConn = c.getConexao();
 
         String sql = "UPDATE produto SET valor = ?, nome = ? WHERE id = ?";
 
-        try {
-            PreparedStatement ps = dbConn.prepareStatement(sql);
+        PreparedStatement ps = dbConn.prepareStatement(sql);
 
-            ps.setFloat(1, this.valor);
-            ps.setString(2, this.nome);
-            ps.setInt(3, this.id);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        ps.setFloat(1, this.valor);
+        ps.setString(2, this.nome);
+        ps.setInt(3, this.id);
+        ps.executeUpdate();
     }
 
-    public void delete(){
+    public void delete() throws SQLException{
         Conexao c = new Conexao();
         Connection dbConn = c.getConexao();
 
         String sql = "DELETE FROM produto WHERE id = ?";
 
-        try {
-            PreparedStatement ps = dbConn.prepareStatement(sql);
-            ps.setInt(1, this.id);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        PreparedStatement ps = dbConn.prepareStatement(sql);
+        ps.setInt(1, this.id);
+        ps.executeUpdate();
     }
 
-    public static ArrayList<Produto> getAll(){
+    public static ArrayList<Produto> getAll() throws SQLException{
         Conexao c = new Conexao();
         Connection dbConn = c.getConexao();
         ArrayList<Produto> produtos = new ArrayList<>();
 
         String sql = "SELECT * FROM produto";
 
-        try {
             Statement st = dbConn.createStatement();
             ResultSet rs = st.executeQuery(sql);
 
@@ -101,31 +88,23 @@ public class Produto {
                 produto.setNome(rs.getString("nome"));
                 produtos.add(produto);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
         return produtos;
     }
 
-    public void load(){
+    public void load() throws SQLException{
         Conexao c = new Conexao();
         Connection dbConn = c.getConexao();
 
         String sql = "SELECT * FROM produto WHERE id = ?";
 
-        try {
-            PreparedStatement ps = dbConn.prepareStatement(sql);
+        PreparedStatement ps = dbConn.prepareStatement(sql);
 
-            ps.setInt(1, this.id);
-            ResultSet rs = ps.executeQuery();
+        ps.setInt(1, this.id);
+        ResultSet rs = ps.executeQuery();
 
-            if(rs.next()){
-                this.nome = rs.getString("nome");
-                this.valor = rs.getFloat("valor");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if(rs.next()){
+            this.nome = rs.getString("nome");
+            this.valor = rs.getFloat("valor");
         }
     }
 }

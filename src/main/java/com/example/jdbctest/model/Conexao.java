@@ -9,17 +9,12 @@ public class Conexao {
     private String usuario = "root";
     private String senha = "";
 
-    public Connection getConexao(){
+    public Connection getConexao() throws SQLException{
 
         String conecta = "jdbc:mysql://localhost:3306/" + banco;
         Connection conexao = null;
 
-        try {
-            conexao = DriverManager.getConnection(conecta, usuario, senha);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        
+        conexao = DriverManager.getConnection(conecta, usuario, senha);
         return conexao;
     }
 }

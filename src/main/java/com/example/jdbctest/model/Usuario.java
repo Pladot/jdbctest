@@ -24,99 +24,77 @@ public class Usuario {
         this.nome = nome;
     }
 
-    public void insert(){
+    public void insert() throws SQLException{
         Conexao c = new Conexao();
         Connection dbConn = c.getConexao();
 
         String sql = "INSERT into usuario " + "(id,nome) " + "VALUES (?,?)";
 
-        try {
-            PreparedStatement ps = dbConn.prepareStatement(sql);
+        PreparedStatement ps = dbConn.prepareStatement(sql);
 
-            ps.setInt(1, this.id);
-            ps.setString(2, this.nome);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        
+        ps.setInt(1, this.id);
+        ps.setString(2, this.nome);
+        ps.executeUpdate();
     }
 
-    public void update(){
+    public void update() throws SQLException{
         Conexao c = new Conexao();
         Connection dbConn = c.getConexao();
 
         String sql = "UPDATE usuario " + "SET nome = ? WHERE id = ?";
 
-        try {
-            PreparedStatement ps = dbConn.prepareStatement(sql);
+        PreparedStatement ps = dbConn.prepareStatement(sql);
 
-            ps.setString(1, this.nome);
-            ps.setInt(2, this.id);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        ps.setString(1, this.nome);
+        ps.setInt(2, this.id);
+        ps.executeUpdate();
     }
 
-    public void delete(){
+    public void delete() throws SQLException{
         Conexao c = new Conexao();
         Connection dbConn = c.getConexao();
 
         String sql = "DELETE FROM usuario WHERE id = ?";
 
-        try {
-            PreparedStatement ps = dbConn.prepareStatement(sql);
+        PreparedStatement ps = dbConn.prepareStatement(sql);
 
-            ps.setInt(1, this.id);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        ps.setInt(1, this.id);
+        ps.executeUpdate();
     }
 
-    public static ArrayList<Usuario> getAll(){
+    public static ArrayList<Usuario> getAll() throws SQLException{
         Conexao c = new Conexao();
         Connection dbConn = c.getConexao();
         ArrayList<Usuario> usuarios = new ArrayList<>();
 
         String sql = "SELECT * FROM usuario";
 
-        try {
-            Statement st = dbConn.createStatement();
-            ResultSet rs = st.executeQuery(sql);
-            while(rs.next()){
-                Usuario usuario = new Usuario();
+        Statement st = dbConn.createStatement();
+        ResultSet rs = st.executeQuery(sql);
+        while(rs.next()){
+            Usuario usuario = new Usuario();
 
-                usuario.setId(rs.getInt("id"));
-                usuario.setNome(rs.getString("nome"));
-                usuarios.add(usuario);
+            usuario.setId(rs.getInt("id"));
+            usuario.setNome(rs.getString("nome"));
+            usuarios.add(usuario);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
         return usuarios;    
     }
 
-    public void load(){
+    public void load() throws SQLException{
         Conexao c = new Conexao();
         Connection dbConn = c.getConexao();
 
         String sql = "SELECT * FROM usuario WHERE id = ?";
 
-        try {
-            PreparedStatement ps = dbConn.prepareStatement(sql);
+        PreparedStatement ps = dbConn.prepareStatement(sql);
 
-            ps.setInt(1, this.id);
-            ResultSet rs = ps.executeQuery();
+        ps.setInt(1, this.id);
+        ResultSet rs = ps.executeQuery();
 
-            if(rs.next()){
-                this.nome = rs.getString("nome");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if(rs.next()){
+            this.nome = rs.getString("nome");
         }
-    }
     
+    }
 }
