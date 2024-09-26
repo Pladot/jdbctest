@@ -18,5 +18,13 @@ public class ProdutoController {
         
         return produto;
     }
-    
+
+    @PostMapping("produto/atualizar")
+    public Produto atualizar(Produto produto) throws SQLException{
+        produto.update();        
+
+        return produto;
+    }
 }
+
+
