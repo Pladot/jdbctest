@@ -106,6 +106,26 @@ public class Produto {
         }
 
         return produtos;
+    }
 
+    public void load(){
+        Conexao c = new Conexao();
+        Connection dbConn = c.getConexao();
+
+        String sql = "SELECT * FROM produto WHERE id = ?";
+
+        try {
+            PreparedStatement ps = dbConn.prepareStatement(sql);
+
+            ps.setInt(1, this.id);
+            ResultSet rs = ps.executeQuery();
+
+            if(rs.next()){
+                this.nome = rs.getString("nome");
+                this.valor = rs.getFloat("valor");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
