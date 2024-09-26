@@ -7,9 +7,6 @@ import com.example.jdbctest.model.Usuario;
 import java.sql.SQLException;
 
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
-
 
 
 @RestController
@@ -26,6 +23,13 @@ public class UsuarioController {
         usuario.update();        
 
         return usuario;
-    }    
+    }
+        
+    @PostMapping("usuario/deletar")
+    public Usuario deletar(Usuario usuario) throws SQLException{
+        usuario.delete();
+
+        return usuario;
+    }
     
 }
