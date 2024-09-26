@@ -1,4 +1,4 @@
-package com.example.jdbctest;
+package com.example.jdbctest.model;
 
 import java.sql.Connection;
 import java.sql.SQLException;
