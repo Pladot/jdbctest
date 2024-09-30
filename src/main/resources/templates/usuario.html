@@ -19,8 +19,6 @@
         function cadastrar(){
             let dados = $('#cadastrar').serialize();
             $.post("http://localhost:8080/usuario/cadastrar",dados);
-            $('id').val("");
-            $('#nome').val("");
         }
     </script>
 
