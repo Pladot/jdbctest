@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="cadastrar">
+        <input type="text" id="id" name="id" placeholder="id">
+        <input type="text" id="valor" name="valor" placeholder="valor">
+        <input type="text" id="nome" name="nome" placeholder="nome">
+        <button type="button" id="enviar" onclick="cadastrar()">Enviar</button>
+    </form>
+
+    <a href="index.html">Home</a>
+
+    <script>
+        function cadastrar(){
+            let dados = $('#cadastrar').serialize();
+            $.post("http://localhost:8080/produto/cadastrar",dados);
+        }
+    </script>
+
+</body>
+</html>
