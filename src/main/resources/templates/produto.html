@@ -4,6 +4,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
 <body>
@@ -50,6 +51,7 @@
                         <tr>
                             <td>${produto.id}</td>
                             <td><span id="valor2_${produto.id}">${produto.nome}</span></td>
+                            <input type="text" id="input_nome_${produto.id}" placeholder="Novo Nome" style="display:none;">
                             <td>
                                 <span id="valor_${produto.id}">${produto.valor}</span>
                                 <input type="text" id="input_nome_${produto.id}" placeholder="Novo Nome" style="display:none;">
@@ -67,6 +69,7 @@
         }
 
         function atualizar(id) {
+            $(`#valor2_${id}`).hide();
             $(`#valor_${id}`).hide();
             $(`#input_nome_${id}`).val($(`#valor2_${id}`).text()).show();
             $(`#input_valor_${id}`).val($(`#valor_${id}`).text()).show();
