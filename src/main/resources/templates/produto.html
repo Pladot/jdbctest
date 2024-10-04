@@ -7,20 +7,38 @@
     <title>Document</title>
 </head>
 <body>
-    <form id="cadastrar">
-        <input type="text" id="id" name="id" placeholder="id">
-        <input type="text" id="nome" name="nome" placeholder="nome">
-        <input type="text" id="valor" name="valor" placeholder="valor">
-        <button type="button" id="enviar" onclick="cadastrar()">Enviar</button>
-    </form>
 
-    <a href="index.html">Home</a>
+    <div class="container">
+        <h1>Cadastro de Produtos</h1>
+        <form id="cadastrar">
+            <input type="text" id="id" name="id" placeholder="ID" required>
+            <input type="text" id="valor" name="valor" placeholder="Valor" required>
+            <input type="text" id="nome" name="nome" placeholder="Nome" required>
+            <button type="button" id="enviar" onclick="cadastrar()">Enviar</button>
+        </form>
 
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="tabela"></tbody>
+        </table>
+
+        <a href="index.html">Home</a>
+    </div>
+    
     <script>
+
         function cadastrar(){
             let dados = $('#cadastrar').serialize();
             $.post("http://localhost:8080/produto/cadastrar",dados);
         }
+
+        
     </script>
 
 </body>
