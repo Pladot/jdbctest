@@ -4,23 +4,86 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
 <body>
-    <form id="cadastrar">
-        <input type="text" id="id" name="id" placeholder="id">
-        <input type="text" id="descricao" name="descricao" placeholder="descricao">
-        <button type="button" id="enviar" onclick="cadastrar()">Enviar</button>
-    </form>
+    <div class="container">
+        <h1>Cadastro de Categorias</h1>
+        <form id="cadastrar">
+            <input type="text" id="id" name="id" placeholder="ID" required>
+            <input type="text" id="descricao" name="descricao" placeholder="Descricao" required>
+            <button type="button" id="enviar" onclick="cadastrar()">Enviar</button>
+        </form>
 
-    <a href="index.html">Home</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Descricao</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="tabela"></tbody>
+        </table>
+
+        <a href="index.html">Home</a>
+    </div>
 
     <script>
         function cadastrar(){
             let dados = $('#cadastrar').serialize();
-            $.post("http://localhost:8080/categoria/cadastrar",dados);
+            $.post("http://localhost:8080/categoria/cadastrar", dados, function(){
+                listar();
+            });
         }
-    </script>
 
+        function listar(){
+            $.get("http://localhost:8080/categoria", function(data){
+                let tabela = $('#tabela');
+                tabela.empty();
+                data.forEach(categoria => {
+                    tabela.append(`
+                        <tr>
+                            <td>${categoria.id}</td>
+                            <td>
+                                <span id="descricao_${categoria.id}">${categoria.descricao}</span>
+                                <input type="text" id="input_descricao_${categoria.id}" placeholder="Nova Descricao" style="display:none;">
+                            </td>
+                            <td>
+                                <button type="button" id="atualizar_${categoria.id}" onclick="atualizar(${categoria.id})">Atualizar</button>
+                                <button type="button" id="enviarAlteracoes_${categoria.id}" style="display:none;" onclick="atualizarfim(${categoria.id})">Enviar Alterações</button>
+                                <button type="button" onclick="deletar(${categoria.id})">Deletar</button>
+                            </td>
+                        </tr>
+                    `);
+                });
+            });
+        }
+
+        function atualizar(id) {
+            $(`#descricao_${id}`).hide();
+            $(`#input_descricao_${id}`).val($(`#descricao_${id}`).text()).show();
+            $(`#atualizar_${id}`).hide();
+            $(`#enviarAlteracoes_${id}`).show();
+        }
+
+        function atualizarfim(id) {
+            let novaDescricao = $(`#input_descricao_${id}`).val();
+            $.post("http://localhost:8080/categoria/atualizar", { id: id, descricao: novaDescricao }, function () {
+                listar();
+            });
+        }
+
+        function deletar(id){
+            $.post("http://localhost:8080/categoria/deletar", { id: id }, function(){
+                listar();
+            });
+        }
+
+        $(document).ready(function() {
+            listar();
+        });
+    </script>
 </body>
 </html>
