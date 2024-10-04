@@ -8,31 +8,32 @@
     <title>Document</title>
 </head>
 <body>
-    <form id="cadastrar">
-        <input type="text" id="id" name="id" placeholder="id">
-        <input type="text" id="nome" name="nome" placeholder="nome">
-        <button type="button" id="enviar" onclick="cadastrar()">Enviar</button>
-    </form>
+    <div class="container">
+        <h1>Cadastro de Usuários</h1>
+        <form id="cadastrar">
+            <input type="text" id="id" name="id" placeholder="ID" required>
+            <input type="text" id="nome" name="nome" placeholder="Nome" required>
+            <button type="button" id="enviar" onclick="cadastrar()">Enviar</button>
+        </form>
 
-    <table>
-        <thead>
-            <td>Id</td>
-            <td>Nome</td>
-            <td id="acoes">Ações</td>
-        </thead>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="tabela"></tbody>
+        </table>
 
-        <tbody id="tabela">
-
-        </tbody>
-    </table>
-
-
-    <a href="index.html">Home</a>
+        <a href="index.html">Home</a>
+    </div>
 
     <script>
         function cadastrar(){
             let dados = $('#cadastrar').serialize();
-            $.post("http://localhost:8080/usuario/cadastrar",dados, function(){
+            $.post("http://localhost:8080/usuario/cadastrar", dados, function(){
                 listar();
             });
         }
@@ -56,8 +57,8 @@
                             </td>
                         </tr>
                     `);
-                })
-            })
+                });
+            });
         }
 
         function atualizar(id) {
@@ -83,8 +84,6 @@
         $(document).ready(function() {
             listar();
         });
-
     </script>
-
 </body>
 </html>
