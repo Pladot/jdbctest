@@ -49,7 +49,7 @@
                     tabela.append(`
                         <tr>
                             <td>${produto.id}</td>
-                            <td>${produto.nome}</td>
+                            <td><span id="valor2_${produto.id}">${produto.nome}</span></td>
                             <td>
                                 <span id="valor_${produto.id}">${produto.valor}</span>
                                 <input type="text" id="input_nome_${produto.id}" placeholder="Novo Nome" style="display:none;">
@@ -68,7 +68,7 @@
 
         function atualizar(id) {
             $(`#valor_${id}`).hide();
-            $(`#input_nome_${id}`).val($(`#valor_${id}`).text()).show();
+            $(`#input_nome_${id}`).val($(`#valor2_${id}`).text()).show();
             $(`#input_valor_${id}`).val($(`#valor_${id}`).text()).show();
             $(`#atualizar_${id}`).hide();
             $(`#enviarAlteracoes_${id}`).show();
@@ -79,6 +79,12 @@
             let novoValor = $(`#input_valor_${id}`).val();
             $.post("http://localhost:8080/produto/atualizar", { id: id, nome: novoNome,valor: novoValor }, function () {
                 listar();
+            });
+        }
+
+        function deletar(id) {
+            $.post("http://localhost:8080/produto/deletar", { id: id }, function() {
+                listar(); // Atualiza a tabela após a exclusão
             });
         }
 
