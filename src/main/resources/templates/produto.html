@@ -36,9 +36,31 @@
         function cadastrar(){
             let dados = $('#cadastrar').serialize();
             $.post("http://localhost:8080/produto/cadastrar",dados);
+            listar();
         }
 
-        
+        function listar(){
+            $.get("http://localhost:8080/produto", function(data){
+                let tabela = $('#tabela');
+                tabela.empty();
+                data.forEach(produto => {
+                    tabela.append(`
+                        <tr>
+                            <td>${produto.id}</td>
+                            <td>
+                                <span id="nome_${produto.id}">${produto.nome}</span>
+                                <input type="text" id="input_nome_${produto.id}" placeholder="Novo Nome" style="display:none;">
+                            </td>
+                            <td>
+                                <button type="button" id="atualizar_${produto.id}" onclick="atualizar(${produto.id})">Atualizar</button>
+                                <button type="button" id="enviarAlteracoes_${produto.id}" style="display:none;" onclick="atualizarfim(${produto.id})">Enviar Alterações</button>
+                                <button type="button" onclick="deletar(${produto.id})">Deletar</button>
+                            </td>
+                        </tr>
+                    `);
+                });
+            });
+        }
     </script>
 
 </body>
