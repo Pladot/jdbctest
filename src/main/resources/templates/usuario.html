@@ -31,7 +31,9 @@
     <script>
         function cadastrar(){
             let dados = $('#cadastrar').serialize();
-            $.post("http://localhost:8080/usuario/cadastrar",dados);
+            $.post("http://localhost:8080/usuario/cadastrar",dados, function(){
+                listar();
+            });
         }
 
         function listar(){
@@ -43,10 +45,20 @@
                         <tr>
                             <td>${usuario.id}</td>
                             <td>${usuario.nome}</td>
+                            <td>
+                                <button type="button" onclick="deletar(${usuario.id})">Deletar</button>
+                            </td>
                         </tr>
                     `);
                 })
             })
+        }
+
+
+        function deletar(id){
+            $.post("http://localhost:8080/usuario/deletar", { id: id }, function(){
+                listar();
+            });
         }
 
         $(document).ready(function() {
