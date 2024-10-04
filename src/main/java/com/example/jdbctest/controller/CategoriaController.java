@@ -1,5 +1,6 @@
 package com.example.jdbctest.controller;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 
 import com.example.jdbctest.model.Categoria;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class CategoriaController {
     @PostMapping("categoria/cadastrar")

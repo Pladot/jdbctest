@@ -22,6 +22,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Nome</th>
+                    <th>Valores</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -35,8 +36,9 @@
 
         function cadastrar(){
             let dados = $('#cadastrar').serialize();
-            $.post("http://localhost:8080/produto/cadastrar",dados);
-            listar();
+            $.post("http://localhost:8080/produto/cadastrar",dados, function(){
+                listar();
+            });
         }
 
         function listar(){
@@ -47,9 +49,10 @@
                     tabela.append(`
                         <tr>
                             <td>${produto.id}</td>
+                            <td>${produto.nome}</td>
                             <td>
-                                <span id="nome_${produto.id}">${produto.nome}</span>
-                                <input type="text" id="input_nome_${produto.id}" placeholder="Novo Nome" style="display:none;">
+                                <span id="valor_${produto.id}">${produto.valor}</span>
+                                <input type="text" id="input_valor_${produto.id}" placeholder="Novo Valor" style="display:none;">
                             </td>
                             <td>
                                 <button type="button" id="atualizar_${produto.id}" onclick="atualizar(${produto.id})">Atualizar</button>
@@ -61,6 +64,10 @@
                 });
             });
         }
+
+        $(document).ready(function() {
+            listar();
+        });
     </script>
 
 </body>
