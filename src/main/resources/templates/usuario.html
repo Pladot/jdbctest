@@ -4,6 +4,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
 <body>
@@ -44,8 +45,13 @@
                     tabela.append(`
                         <tr>
                             <td>${usuario.id}</td>
-                            <td>${usuario.nome}</td>
                             <td>
+                                <span id="nome_${usuario.id}">${usuario.nome}</span>
+                                <input type="text" id="input_nome_${usuario.id}" placeholder="Novo Nome" style="display:none;">
+                            </td>
+                            <td>
+                                <button type="button" id="atualizar_${usuario.id}" onclick="atualizar(${usuario.id})">Atualizar</button>
+                                <button type="button" id="enviarAlteracoes_${usuario.id}" style="display:none;" onclick="atualizarfim(${usuario.id})">Enviar Alterações</button>
                                 <button type="button" onclick="deletar(${usuario.id})">Deletar</button>
                             </td>
                         </tr>
@@ -54,6 +60,19 @@
             })
         }
 
+        function atualizar(id) {
+            $(`#nome_${id}`).hide();
+            $(`#input_nome_${id}`).val($(`#nome_${id}`).text()).show();
+            $(`#atualizar_${id}`).hide();
+            $(`#enviarAlteracoes_${id}`).show();
+        }
+
+        function atualizarfim(id) {
+            let novoNome = $(`#input_nome_${id}`).val();
+            $.post("http://localhost:8080/usuario/atualizar", { id: id, nome: novoNome }, function () {
+                listar();
+            });
+        }
 
         function deletar(id){
             $.post("http://localhost:8080/usuario/deletar", { id: id }, function(){
