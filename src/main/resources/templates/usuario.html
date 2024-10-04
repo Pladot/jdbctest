@@ -14,7 +14,15 @@
     </form>
 
     <table>
-        
+        <thead>
+            <td>Id</td>
+            <td>Nome</td>
+            <td id="acoes">Ações</td>
+        </thead>
+
+        <tbody id="tabela">
+
+        </tbody>
     </table>
 
 
@@ -25,6 +33,26 @@
             let dados = $('#cadastrar').serialize();
             $.post("http://localhost:8080/usuario/cadastrar",dados);
         }
+
+        function listar(){
+            $.get("http://localhost:8080/usuario", function(data){
+                let tabela = $('#tabela');
+                tabela.empty();
+                data.forEach(usuario => {
+                    tabela.append(`
+                        <tr>
+                            <td>${usuario.id}</td>
+                            <td>${usuario.nome}</td>
+                        </tr>
+                    `);
+                })
+            })
+        }
+
+        $(document).ready(function() {
+            listar();
+        });
+
     </script>
 
 </body>
